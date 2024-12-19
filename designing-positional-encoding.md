@@ -340,7 +340,7 @@ $$
 Much the same as Sinusoidal Encoding, \\(\mathbf{M_i}\\) is simply:
 
 $$
-\mathbf{M_i} = \begin{bmatrix} \cos(\omega_i p) & \sin(\omega_i p) \\ -\sin(\omega_i p) & \cos(\omega_i p) \end{bmatrix}
+\mathbf{M_i} = \begin{bmatrix} \cos(\omega_i p) & -\sin(\omega_i p) \\ \sin(\omega_i p) & \cos(\omega_i p) \end{bmatrix}
 $$
 
 <figure class="image flex flex-col items-center text-center m-0 w-full">
@@ -354,7 +354,7 @@ In practice, we don't use a matrix multiplication to compute RoPE as it would be
 computationally inefficient with such a sparse matrix. Instead, we can directly apply the rotations to pairs of elements independently, taking advantage of the regular pattern in the computation: 
 
 $$
-R_{\Theta,p}^d q = \begin{pmatrix} 
+R_{\theta,p}^d q = \begin{pmatrix} 
 q_1 \\
 q_2 \\
 q_3 \\
@@ -363,13 +363,13 @@ q_4 \\
 q_{d-1} \\
 q_d
 \end{pmatrix} \otimes \begin{pmatrix}
-\cos p\theta_1 \\
-\cos p\theta_1 \\
-\cos p\theta_2 \\
-\cos p\theta_2 \\
+\cos p\omega_1 \\
+\cos p\omega_1 \\
+\cos p\omega_2 \\
+\cos p\omega_2 \\
 \vdots \\
-\cos p\theta_{d/2} \\
-\cos p\theta_{d/2}
+\cos p\omega_{d/2} \\
+\cos p\omega_{d/2}
 \end{pmatrix} + \begin{pmatrix}
 -q_2 \\
 q_1 \\
@@ -379,13 +379,13 @@ q_3 \\
 -q_d \\
 q_{d-1}
 \end{pmatrix} \otimes \begin{pmatrix}
-\sin p\theta_1 \\
-\sin p\theta_1 \\
-\sin p\theta_2 \\
-\sin p\theta_2 \\
+\sin p\omega_1 \\
+\sin p\omega_1 \\
+\sin p\omega_2 \\
+\sin p\omega_2 \\
 \vdots \\
-\sin p\theta_{d/2} \\
-\sin p\theta_{d/2}
+\sin p\omega_{d/2} \\
+\sin p\omega_{d/2}
 \end{pmatrix}
 $$
 
